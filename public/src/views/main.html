@@ -1,0 +1,197 @@
+<uib-tabset active="main.active">
+	<uib-tab index="0" heading="Contact Information">
+
+		<form action="#" name="contactForm"  class="form-horizontal col-sm-6">
+			
+			<div class="form-group">
+				<label class="control-label" for="firstName">First Name:</label>
+				<input 
+				type="text"
+				ng-model="main.firstName" 
+				class="form-control" id="firstName" 
+				placeholder="First Name" 
+				required
+				ng-minlength="3"
+				ng-maxlength="30">
+			</div>
+
+			<div class="form-group">
+				<label class="control-label" for="lastName">Last Name:</label>
+				<input 
+				type="text"
+				ng-model="main.lastName" 
+				class="form-control" 
+				id="lastName" 
+				placeholder="Last Name" 
+				required
+				ng-minlength="3"
+				ng-maxlength="30">
+			</div>
+
+			<div class="row">
+				<div class="form-group col-sm-6">
+					<label class="control-label">Contact via:</label>
+					<select ng-model="main.contMethod" class="form-control">
+						<option value="email">Email</option>
+						<option value="phone">Phone Number</option>
+						<option value="emailAndPhone">Email and Phone Number</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group" ng-if="main.contMethod === 'email' || main.contMethod === 'emailAndPhone'">
+				<label class="control-label" for="email">Email:</label>
+				<input ng-model="main.email" type="email" class="form-control" id="email" placeholder="Email"  required>
+			</div>
+
+			<div class="form-group" ng-if="main.contMethod === 'phone' || main.contMethod === 'emailAndPhone'">
+				<label class="control-label" type="text" for="phone">Phone Number:</label>
+				<input 
+				ng-model="main.phone" 
+				class="form-control" 
+				id="phone" 
+				placeholder="Phone Number" 
+				mask="999-999-9999"  
+				required>
+			</div>
+			
+
+			<div class="form-group">
+				<button type="button" class="btn btn-default" ng-if="contactForm.$valid" ng-click="main.active = 1">Next</button>
+			</div>
+
+		</form>
+
+	</uib-tab>
+	<uib-tab index="1" heading="Skills" ng-if="contactForm.$valid">
+
+		<form name="skillsForm" class="form-horizontal col-sm-6">
+
+			<div class="form-group">
+				<label class="control-label">Technologies:</label>
+			</div>
+
+			<label class="checkbox-inline" ng-repeat="tecnologName in main.technologies">
+			  <input
+			    type="checkbox"
+			    name="selectedFruits[]"
+			    value="{{tecnologName}}"
+			    ng-checked="main.technologSelect.indexOf(tecnologName) > -1"
+			    ng-click="main.toggleSelection(tecnologName)"
+			  > {{tecnologName}}
+			</label>
+
+			<div class="form-group">
+				<label class="control-label">Languages:</label>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-sm-4">
+					<label class="checkbox-inline" for="englishLang">
+						<input type="checkbox" name="lang" ng-model="main.englishLang" id="englishLang">English
+					</label>
+				</div>
+
+				<div class="form-group col-sm-8" ng-if="main.englishLang">
+					<label class="checkbox-inline">level
+						<select ng-model="main.englishLevel" class="form-control">
+						  <option value="Basic">Basic</option>
+						  <option value="Independent">Independent</option>
+						  <option value="Proficient">Proficient</option>
+						</select>
+					</label>
+					
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-sm-4">
+					<label class="checkbox-inline" for="chineseLang">
+						<input type="checkbox" name="lang" ng-model="main.chineseLang" id="chineseLang">Chinese
+					</label>
+				</div>
+
+				<div class="form-group col-sm-8" ng-if="main.chineseLang">
+					<label class="checkbox-inline">level
+						<select ng-model="main.chineseLevel" class="form-control">
+						  <option value="Basic">Basic</option>
+						  <option value="Independent">Independent</option>
+						  <option value="Proficient">Proficient</option>
+						</select>
+					</label>
+					
+				</div>
+			</div>
+
+			<div class="form-group">
+				<button 
+				ng-if="main.technologSelect.length && (main.englishLang || main.chineseLang)" 
+				type="button" 
+				class="btn btn-default" 
+				ng-click="main.active = 2"
+				>Next</button>
+			</div>
+
+		</form>
+
+	</uib-tab>
+	<uib-tab index="2" heading="Resume" ng-if="main.technologSelect.length && (main.englishLang || main.chineseLang)">
+
+		<form name="loadForm">
+			<fieldset>
+
+				<div class="file_upload">
+					Click here to upload resume
+					<input 
+					type="file" 
+					ngf-select 
+					ng-model="picFile" 
+					name="file"    
+					accept=".pdf,.docx,.doc" 
+					ngf-max-size="2MB" 
+					required
+					ngf-model-invalid="errorFile">
+				</div>
+
+				<i ng-show="loadForm.file.$error.maxSize">File too large 
+					{{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+
+					<div class="btn-group" role="group">
+					  <button type="button" ng-click="picFile = null; main.resumeFileName = ''" ng-show="picFile" class="btn btn-danger">Remove</button>
+					  <button 
+					  type="button"
+					  ng-disabled="!loadForm.$valid" 
+					  ng-click="main.uploadPic(picFile)"
+					  class="btn btn-secondary">Upload file</button>
+					</div>
+
+					<div class="progress" ng-show="picFile.progress >= 0">
+					    <div class="progress-bar" style="width: {{picFile.progress}}%;">
+					        {{picFile.progress}}%
+					    </div>
+					</div>
+
+				</fieldset>
+
+			</form>
+
+			<div class="form-group">
+				<button 
+				type="button"
+				class="btn btn-success" 
+				ng-if="main.resumeFileName" 
+				ng-click="main.resumeSubmit()">Send resume</button>
+			</div>
+
+
+		</uib-tab>
+</uib-tabset>
+
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">{{message}}</h3>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="closeModal()">OK</button>
+    </div>
+</script>

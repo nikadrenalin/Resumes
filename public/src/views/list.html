@@ -1,0 +1,20 @@
+
+<div ng-repeat="item in main.resumes" class="panel panel-default">
+	<div class="panel-heading">{{($index + 1}}</div>
+	<div class="panel-body">
+		<h4>First Name: {{item.firstName}}</h4>
+		<h4>Last Name: {{item.lastName}}</h4>
+		<p ng-if="item.email">Email: {{item.email}}</p>
+		<p ng-if="item.phone">Phone Number: {{item.phone}}</p>
+		<ul>
+			<li ng-repeat="tecnologi in item.technologies">{{tecnologi}}</li>
+		</ul>
+		<p>Languages:</p>
+		<ul>
+			<li ng-repeat="lang in item.lang">
+				<span>{{lang.lang}}</span> - {{lang.level}}
+			</li>
+		</ul>
+		<a ng-if="item.resumeUrl" ng-href="/api/download/{{item.resumeUrl}}">Download resume</a>
+	</div>
+</div>

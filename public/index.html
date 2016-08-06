@@ -1,0 +1,60 @@
+<!doctype html>
+
+<html ng-app="resumeApp">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Resume</title>
+
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+	<!-- angular-upload -->
+	<link rel="stylesheet" href="assets/css/btnUpload.min.css">
+
+	<!-- main style -->
+	<link rel="stylesheet" href="assets/css/main.css">
+
+</head>
+<body>
+	
+	<div class="container">
+		<nav class="navbar navbar-static-top navbar-inverse" ng-controller="navController">
+		  <div class="container-fluid">
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+		      <ul class="nav navbar-nav">
+		        <li ng-class="{active: $state.current.name === 'home'}"><a ui-sref="home" ng-href="/">Main</a></li>
+		        <li ng-class="{active: $state.current.name === 'list'}"><a ui-sref="list" ng-href="/list">Resume list</a></li>
+		      </ul>
+		    </div>
+		  </div>
+		</nav>
+
+		<div ui-view></div>
+
+	</div>
+
+	<!-- SPELLS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js"></script><!-- load angular -->
+	
+	<!-- angular-ui-router -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
+	
+	<!-- ui-bootstrap -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.0/ui-bootstrap-tpls.min.js"></script>
+
+	<!-- angular-upload -->
+	<script type="text/javascript" src='assets/js/angular-upload.min.js'></script>
+
+	<!-- ngMask -->
+	<script src='assets/js/ngMask.min.js'></script>
+	
+	<!-- angular app -->
+	<!-- <script src="src/filters/filters.js"></script> -->
+	<script src="src/controllers/controllers.js"></script>
+	<script src="src/services/services.js"></script>
+
+
+</body>
+</html>
