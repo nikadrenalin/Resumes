@@ -7,7 +7,8 @@ angular
 .config(routerConfig)
 .controller('MainController', MainController)
 .controller('ListController', ListController)
-.controller('ModalController', ModalController);
+.controller('ModalController', ModalController)
+.controller('navController', navController);
 
 /** @ngInject */
 function routerConfig($stateProvider, $urlRouterProvider) {
@@ -159,6 +160,11 @@ function ModalController($scope, $uibModalInstance, text) {
 
     $uibModalInstance.close();
   };
+}
+
+function navController($rootScope, $state) {
+
+  $rootScope.$state = $state;
 }
 
 })();
