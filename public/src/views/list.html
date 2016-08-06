@@ -1,6 +1,6 @@
 
-<div ng-repeat="item in main.resumes" class="panel panel-default">
-	<div class="panel-heading">{{($index + 1}}</div>
+<div ng-repeat="item in main.resumes | orderBy:'-'" class="panel panel-default">
+	<div class="panel-heading">{{(main.resumes.length + 1) - ($index + 1)}}</div>
 	<div class="panel-body">
 		<h4>First Name: {{item.firstName}}</h4>
 		<h4>Last Name: {{item.lastName}}</h4>
